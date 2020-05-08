@@ -2,8 +2,6 @@
 
 namespace App;
 
-use http\Exception\InvalidArgumentException;
-
 final class AmoCrm
 {
     private const TEXT = 'Сделка без задачи';
@@ -53,7 +51,9 @@ final class AmoCrm
             curl_setopt($curl, CURLOPT_COOKIEJAR, $this->cookie_file);
             $out = json_decode(curl_exec($curl), true)['response'];
             curl_close($curl);
-            if (!isset($out['auth']) || $out['auth'] == false) throw new \InvalidArgumentException('Ошибка авторизации');
+            if (!isset($out['auth']) || $out['auth'] == false) {
+                throw new \InvalidArgumentException('Ошибка авторизации');
+            }
         } catch (\InvalidArgumentException $e) {
             echo $e->getMessage();
             exit;
