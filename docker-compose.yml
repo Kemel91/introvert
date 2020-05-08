@@ -1,0 +1,23 @@
+  # Версия docker-compose
+  version: '3'
+
+  # Список наших сервисов (контейнеров)
+  services:
+
+    nginx:
+      container_name: amocrm-nginx
+      build: ./build/docker/nginx
+      restart: always
+      ports:
+        - "80:80"
+      volumes:
+        - ./:/var/www
+        - ./build/docker/nginx/nginx/:/etc/nginx/
+      depends_on:
+        - php
+
+    php:
+      container_name: amocrm-php
+      build: ./build/docker/php
+      volumes:
+        - ./:/var/www
